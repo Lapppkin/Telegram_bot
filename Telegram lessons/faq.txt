@@ -1,0 +1,7 @@
+Как получить ник пользователя телеграм программно?
+Есть задача, получить имя пользователя телеграм для бота. Пишу на Python. Использую telebot.
+Решение:
+message.from_user.id
+message.from_user.first_name
+message.from_user.last_name
+message.from_user.username

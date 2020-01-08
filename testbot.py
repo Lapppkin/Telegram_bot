@@ -8,10 +8,30 @@ apihelper.proxy = {'https':'socks5://user38375:1skmnu@213.32.84.49:13541'}
 bot = telebot.TeleBot('1054775144:AAGR0Pu07k2Ql7VdhleiKL1bl79J6keAEfA')
 
 
-# Handles all text messages that contains the commands '/start' or '/help'.
+# Обрабатывает все текстовые сообщения, содержащие команды '/start' or '/help'.
 @bot.message_handler(commands=['start', 'help'])
 def handle_start_help(message):
-	bot.send_message(message.chat.id, f'Привет, {message.from_user.first_name}!')
+	bot.send_message(message.chat.id, f'Привет, {message.from_user.first_name}! 🖐')
+
+# Теперь научим бота реагировать на слово «Привет»
+@bot.message_handler(content_types=['text'])
+def get_text_messages(message):
+	if str.lower(message.text) == str.lower('Привет'):
+		bot.send_message(message.chat.id, f'Приветствую, {message.from_user.first_name} =)')
+	elif message.text == '/help':
+		bot.send_message(message.chat.id, f'Напиши - "Привет!"')
+	else:
+		bot.send_message(message.chat.id, f'{message.from_user.first_name}, я тебя не понимаю.\nВведи команду "/help"')
+
+
+
+
+
+
+
+
+
+
 
 # @bot.message_handler(content_types=['text'])
 # def get_text_messages(message):
