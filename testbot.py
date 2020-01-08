@@ -2,7 +2,7 @@ import telebot
 from telebot import apihelper
 from telebot import types
 
-apihelper.proxy = {'https':'SOCKS5://185.184.77.94:1080'}
+apihelper.proxy = {'https':'socks5://user38375:1skmnu@213.32.84.49:13541'}
 
 bot = telebot.TeleBot('1054775144:AAGR0Pu07k2Ql7VdhleiKL1bl79J6keAEfA')
 
@@ -14,7 +14,7 @@ bot = telebot.TeleBot('1054775144:AAGR0Pu07k2Ql7VdhleiKL1bl79J6keAEfA')
 
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
-    if message.text == 'Привет':
+    if message.text == 'Привет' or 'привет':
         bot.send_message(message.from_user.id, 'Привет, чем я могу тебе помочь?')
     elif message.text == '/help':
         bot.send_message(message.from_user.id, 'Напиши привет')
