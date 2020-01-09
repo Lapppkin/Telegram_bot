@@ -30,6 +30,7 @@ def get_text_messages(message):
 		# И добавляем кнопку на экран
 		keyboard.add(key_one)
 		keyboard.add(key_two)
+		keyboard.add(key_tree)
 
 		# Показываем все кнопки сразу и пишем сообщение о выборе
 		bot.send_message(message.chat.id, text='Выбери свой пункт меню', reply_markup=keyboard)
@@ -38,22 +39,17 @@ def get_text_messages(message):
 	else:
 		bot.send_message(message.chat.id, f'{message.from_user.first_name}, я тебя не понимаю.\nВведи команду "/help"')
 
-
 # Обработчик нажатий на кнопки
 @bot.callback_query_handler(func=lambda call: True)
 def callback_worker(call):
-
-    # Если нажали на одну из 2 кнопок — выводим данные/текст
-
-    if call.data == "menu_one":
-
-        # Формируем гороскоп
-
-        msg = random.choice(first) + ' ' + random.choice(second) + ' ' + random.choice(second_add) + ' ' + random.choice(third)
-
-        # Отправляем  текст в Телеграм
-
-        bot.send_message(call.message.chat.id, msg)
+	if call.data == 'menu_one':
+		msg1 = f'Периходи по ссылке https://msk.lapkinlab.ru#1' # Формируем описание действия
+		bot.send_message(call.message.chat.id, msg1)
+	elif call.data == 'menu_two':
+		msg2 = f'Периходи по ссылке https://msk.lapkinlab.ru/#2'
+		bot.send_message(call.message.chat.id, msg2)
+	else:
+		bot.send_message(call.message.chat.id, f'Периходи по ссылке https://msk.lapkinlab.ru#3')
 
 
 
