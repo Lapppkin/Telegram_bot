@@ -84,9 +84,44 @@ def callback_worker(call):
 
 def remind_text(message):
     user_text = message.text
-    bot.send_message(message.chat.id, f'{message.from_user.first_name}, через сколько Вам напомнить:\n{user_text}')
+    # bot.register_next_step_handler(user_text, callback_worker_rem)
+    # bot.send_message(message.chat.id, f'{message.from_user.first_name}, через сколько Вам напомнить:\n{user_text}')
+    keyboard_rem = types.InlineKeyboardMarkup()
+
+    key_one_rem = types.InlineKeyboardButton(text='30 минут', callback_data='30_min')
+    key_two_rem = types.InlineKeyboardButton(text='60 минут', callback_data='60_min')
+    key_tree_rem = types.InlineKeyboardButton(text='90 минут', callback_data='90_min')
+
+    # И добавляем кнопку на экран
+    keyboard_rem.add(key_one_rem)
+    keyboard_rem.add(key_two_rem)
+    keyboard_rem.add(key_tree_rem)
+
+    # Показываем все кнопки сразу и пишем сообщение о выборе
+    bot.send_message(message.chat.id, text=f'{message.from_user.first_name}, '
+                                           f'через сколько Вам напомнить: \n{user_text}', reply_markup=keyboard_rem)
 
 
+# Обработчик нажатий на кнопки 2
+# @bot.callback_query_handler(func=lambda call: True)
+# def callback_worker_rem(call):
+#     local_time = float()
+#     if call.data == '30_min':
+#         local_time = local_time * 30
+#         time.sleep(local_time)
+
+
+
+        # sent = bot.send_message(call.message.chat.id, 'О чем вам напомнить?')
+        # bot.register_next_step_handler(sent, remind_text)
+        # Ждём ответа пользователя и результат помещаем в строковую переменную text
+
+    # elif call.data == '60_min':
+    #     local_time = local_time * 60
+    # elif call.data == '90_min':
+    #     local_time = local_time * 90
+    # else:
+    #     pass
 
 
 # @bot.message_handler(content_types=['text'])
