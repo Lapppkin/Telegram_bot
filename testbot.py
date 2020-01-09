@@ -18,14 +18,42 @@ def handle_start_help(message):
 def get_text_messages(message):
 	if str.lower(message.text) == str.lower('Привет'):
 		bot.send_message(message.chat.id, f'Приветствую, {message.from_user.first_name} =)')
+		# Добавляем кнопки
+		# Добавляем код с кнопками в раздел, который реагирует на «Привет»:
+		keyboard = types.InlineKeyboardMarkup()
+
+		# По очереди готовим текст и обработчик для каждого 'элемента'(кнопки)
+		key_one = types.InlineKeyboardButton(text='One', callback_data='menu_one')
+		key_two = types.InlineKeyboardButton(text='Two', callback_data='menu_two')
+		key_tree = types.InlineKeyboardButton(text='Tree', callback_data='menu_tree')
+
+		# И добавляем кнопку на экран
+		keyboard.add(key_one)
+		keyboard.add(key_two)
+
+		# Показываем все кнопки сразу и пишем сообщение о выборе
+		bot.send_message(message.chat.id, text='Выбери свой пункт меню', reply_markup=keyboard)
 	elif message.text == '/help':
 		bot.send_message(message.chat.id, f'Напиши - "Привет!"')
 	else:
 		bot.send_message(message.chat.id, f'{message.from_user.first_name}, я тебя не понимаю.\nВведи команду "/help"')
 
 
+# Обработчик нажатий на кнопки
+@bot.callback_query_handler(func=lambda call: True)
+def callback_worker(call):
 
+    # Если нажали на одну из 2 кнопок — выводим данные/текст
 
+    if call.data == "menu_one":
+
+        # Формируем гороскоп
+
+        msg = random.choice(first) + ' ' + random.choice(second) + ' ' + random.choice(second_add) + ' ' + random.choice(third)
+
+        # Отправляем  текст в Телеграм
+
+        bot.send_message(call.message.chat.id, msg)
 
 
 
