@@ -47,8 +47,10 @@ def handle_start_help(message):
 # Теперь научим бота реагировать на слово «Привет»
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
+
     if str.lower(message.text) == str.lower('Привет'):
         bot.send_message(message.chat.id, f'Приветствую, {message.from_user.first_name} =)')
+
         # Добавляем кнопки
         # Добавляем код с кнопками в раздел, который реагирует на «Привет»:
         keyboard = types.InlineKeyboardMarkup()
@@ -63,23 +65,32 @@ def get_text_messages(message):
 
         # Показываем все кнопки сразу и пишем сообщение о выборе
         bot.send_message(message.chat.id, text='Выбери программу', reply_markup=keyboard)
+
     elif message.text == '/help':
         bot.send_message(message.chat.id, f'Напиши - "Привет!"')
+
     else:
         bot.send_message(message.chat.id, f'{message.from_user.first_name}, я тебя не понимаю.\nВведи команду "/help"')
 
 
-
+@bot.message_handler(content_types=['text'])
 def remind_text(message):
+
     user_text = message.text
+
+    # bot.register_next_step_handler(user_text, callback_worker)
+
     # bot.send_message(message.chat.id, f'{message.from_user.first_name}, через сколько Вам напомнить:\n{user_text}')
+
     keyboard_rem = types.InlineKeyboardMarkup()
 
+    key_zero_rem = types.InlineKeyboardButton(text='1 минута', callback_data='01_min')
     key_one_rem = types.InlineKeyboardButton(text='30 минут', callback_data='30_min')
     key_two_rem = types.InlineKeyboardButton(text='60 минут', callback_data='60_min')
     key_tree_rem = types.InlineKeyboardButton(text='90 минут', callback_data='90_min')
 
     # И добавляем кнопку на экран
+    keyboard_rem.add(key_zero_rem)
     keyboard_rem.add(key_one_rem)
     keyboard_rem.add(key_two_rem)
     keyboard_rem.add(key_tree_rem)
@@ -98,34 +109,38 @@ def callback_worker(call):
 
         # Ждём ответа пользователя и результат помещаем в строковую переменную text
     # elif call.data == 'menu_two':
-    elif call.data == '30_min':
-        bot.send_message(call.message.chat.id, 'Будет сделано через 30 минут =)')
+    elif call.data == '01_min':
+        bot.send_message(call.message.chat.id, 'Будет сделано через 1 минуту =)')
         local_time = float(0.1)
         local_time = local_time * 60
         time.sleep(local_time)
-        msg1 = f'НАПОМИНАЮ' # Нужно решить как можно вывести повторно текст напоминания.
+        msg1 = f'НАПОМИНАЮ: ТУТ БУДЕТ ТЕКСТ ВАШЕГО НАПОМИНАНИЯ' # Нужно решить как можно вывести повторно текст напоминания.
         bot.send_message(call.message.chat.id, msg1)
+
     elif call.data == '30_min':
         bot.send_message(call.message.chat.id, 'Будет сделано через 30 минут =)')
-        local_time = float(0.1)
+        local_time = float(30)
         local_time = local_time * 60
         time.sleep(local_time)
-        msg1 = f'НАПОМИНАЮ' # call.message.chat.id.text
+        msg1 = f'НАПОМИНАЮ: ТУТ БУДЕТ ТЕКСТ ВАШЕГО НАПОМИНАНИЯ' # Нужно решить как можно вывести повторно текст напоминания.
         bot.send_message(call.message.chat.id, msg1)
+
     elif call.data == '60_min':
         bot.send_message(call.message.chat.id, 'Будет сделано через 60 минут =)')
         local_time = float(60)
         local_time = local_time * 60
         time.sleep(local_time)
-        msg1 = f'НАПОМИНАЮ'  # call.message.chat.id.text
+        msg1 = f'НАПОМИНАЮ: ТУТ БУДЕТ ТЕКСТ ВАШЕГО НАПОМИНАНИЯ'  # Нужно решить как можно вывести повторно текст напоминания.
         bot.send_message(call.message.chat.id, msg1)
+
     elif call.data == '90_min':
         bot.send_message(call.message.chat.id, 'Будет сделано через 90 минут =)')
         local_time = float(90)
         local_time = local_time * 60
         time.sleep(local_time)
-        msg1 = f'НАПОМИНАЮ'  # call.message.chat.id.text
+        msg1 = f'НАПОМИНАЮ: ТУТ БУДЕТ ТЕКСТ ВАШЕГО НАПОМИНАНИЯ'  # Нужно решить как можно вывести повторно текст напоминания.
         bot.send_message(call.message.chat.id, msg1)
+
     else:
         pass
 
@@ -163,3 +178,4 @@ def callback_worker(call):
 
 
 bot.polling(none_stop=True, interval=0)
+
