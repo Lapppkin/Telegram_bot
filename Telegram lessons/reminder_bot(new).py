@@ -50,19 +50,10 @@ def get_text_messages(message):
     if str.lower(message.text) == str.lower('Привет'):
         bot.send_message(message.chat.id, f'Приветствую, {message.from_user.first_name} =)')
         # Добавляем кнопки
-        # Добавляем код с кнопками в раздел, который реагирует на «Привет»:
-        keyboard = types.InlineKeyboardMarkup()
+        bot.send_message(message.chat.id, 'О чем Вам напомнить?')
+        bot.send_message(message.chat.id, 'Напишите что хотите запомнить')
+        bot.register_next_step_handler(message, remind_text)
 
-        # По очереди готовим текст и обработчик для каждого 'элемента'(кнопки)
-        key_one = types.InlineKeyboardButton(text='Напоминалка', callback_data='menu_one')
-
-
-        # И добавляем кнопку на экран
-        keyboard.add(key_one)
-
-
-        # Показываем все кнопки сразу и пишем сообщение о выборе
-        bot.send_message(message.chat.id, text='Выбери программу', reply_markup=keyboard)
     elif message.text == '/help':
         bot.send_message(message.chat.id, f'Напиши - "Привет!"')
     else:
@@ -87,23 +78,19 @@ def remind_text(message):
     # Показываем все кнопки сразу и пишем сообщение о выборе
     bot.send_message(message.chat.id, text=f'{message.from_user.first_name}, '
                                            f'через сколько Вам напомнить: \n{user_text}', reply_markup=keyboard_rem)
+    bot.register_next_step_handler(message, callback_worker(message=user_text))
 
 # Обработчик нажатий на кнопки
 @bot.callback_query_handler(func=lambda call: True)
 def callback_worker(call):
 
-    if call.data == 'menu_one':
-        sent = bot.send_message(call.message.chat.id, 'О чем Вам напомнить?')
-        bot.register_next_step_handler(sent, remind_text)
 
-        # Ждём ответа пользователя и результат помещаем в строковую переменную text
-    # elif call.data == 'menu_two':
-    elif call.data == '30_min':
+    if call.data == '30_min':
         bot.send_message(call.message.chat.id, 'Будет сделано через 30 минут =)')
         local_time = float(0.1)
         local_time = local_time * 60
         time.sleep(local_time)
-        msg1 = f'НАПОМИНАЮ' # call.message.chat.id.text
+        msg1 = f'Напоминаю'
         bot.send_message(call.message.chat.id, msg1)
     elif call.data == '30_min':
         bot.send_message(call.message.chat.id, 'Будет сделано через 30 минут =)')
@@ -163,3 +150,10 @@ def callback_worker(call):
 
 
 bot.polling(none_stop=True, interval=0)
+
+# if __name__ == '__main__':
+#      bot.infinity_polling()
+
+
+
+print(self, user_text)
