@@ -103,7 +103,7 @@ def callback_worker(call):
         local_time = float(0.1)
         local_time = local_time * 60
         time.sleep(local_time)
-        msg1 = f'НАПОМИНАЮ' # call.message.chat.id.text
+        msg1 = f'НАПОМИНАЮ' # Нужно решить как можно вывести повторно текст напоминания.
         bot.send_message(call.message.chat.id, msg1)
     elif call.data == '30_min':
         bot.send_message(call.message.chat.id, 'Будет сделано через 30 минут =)')

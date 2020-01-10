@@ -155,5 +155,3 @@ bot.polling(none_stop=True, interval=0)
 #      bot.infinity_polling()
 
 
-
-print(self, user_text)
