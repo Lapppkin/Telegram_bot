@@ -88,12 +88,14 @@ def remind_text(message):
     key_one_rem = types.InlineKeyboardButton(text='30 минут', callback_data='30_min')
     key_two_rem = types.InlineKeyboardButton(text='60 минут', callback_data='60_min')
     key_tree_rem = types.InlineKeyboardButton(text='90 минут', callback_data='90_min')
+    key_four_rem = types.InlineKeyboardButton(text='xx минут', callback_data='xx_min')
 
     # И добавляем кнопку на экран
     keyboard_rem.add(key_zero_rem)
     keyboard_rem.add(key_one_rem)
     keyboard_rem.add(key_two_rem)
     keyboard_rem.add(key_tree_rem)
+    keyboard_rem.add(key_four_rem)
 
     # Показываем все кнопки сразу и пишем сообщение о выборе
     bot.send_message(message.chat.id, text=f'{message.from_user.first_name}, '
@@ -141,18 +143,26 @@ def callback_worker(call):
         msg1 = f'НАПОМИНАЮ: ТУТ БУДЕТ ТЕКСТ ВАШЕГО НАПОМИНАНИЯ'  # Нужно решить как можно вывести повторно текст напоминания.
         bot.send_message(call.message.chat.id, msg1)
 
+    elif call.data == 'xx_min':
+        bot.send_message(call.message.chat.id, 'Будет сделано через xx минут =)')
+        local_time = float(0)
+        local_time = local_time * 60
+        time.sleep(local_time)
+        msg1 = f'НАПОМИНАЮ: ТУТ БУДЕТ ТЕКСТ ВАШЕГО НАПОМИНАНИЯ'  # Нужно решить как можно вывести повторно текст напоминания.
+        bot.send_message(call.message.chat.id, msg1)
+
     else:
         pass
 
 # Обработчик нажатий на кнопки 2
 # @bot.callback_query_handler(func=lambda call: True)
-# def callback_worker_rem(call):
-#     if call.data == '30_min':
-#         bot.send_message(call.chat.id, 'Будет сделано =)')
-#         # local_time = local_time * 30
-#         # time.sleep(local_time)
-#         # msg1 = user_text
-#         # bot.send_message(call.data.message.chat.id, msg1)
+# def callback_worker_rem(call2):
+#     if call2.data == '30_min':
+#         bot.send_message(call2.chat.id, 'Будет сделано =)')
+        # local_time = local_time * 30
+        # time.sleep(local_time)
+        # msg1 = user_text
+        # bot.send_message(call.data.message.chat.id, msg1)
 #
 #
 #
