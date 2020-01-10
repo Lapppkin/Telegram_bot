@@ -62,7 +62,7 @@ def get_text_messages(message):
 
 
         # Показываем все кнопки сразу и пишем сообщение о выборе
-        bot.send_message(message.chat.id, text='Выбери свой пункт меню', reply_markup=keyboard)
+        bot.send_message(message.chat.id, text='Выбери программу', reply_markup=keyboard)
     elif message.text == '/help':
         bot.send_message(message.chat.id, f'Напиши - "Привет!"')
     else:
@@ -73,18 +73,27 @@ def get_text_messages(message):
 @bot.callback_query_handler(func=lambda call: True)
 def callback_worker(call):
     if call.data == 'menu_one':
-        sent = bot.send_message(call.message.chat.id, 'О чем вам напомнить?')
+        sent = bot.send_message(call.message.chat.id, 'О чем Вам напомнить?')
         bot.register_next_step_handler(sent, remind_text)
         # Ждём ответа пользователя и результат помещаем в строковую переменную text
 
-    elif call.data == 'menu_two':
-        pass
+    # elif call.data == 'menu_two':
+    elif call.data == '30_min':
+        bot.send_message(call.message.chat.id, 'Будет сделано через 30 минут =)')
+        local_time = float(1)
+        local_time = local_time * 60
+        time.sleep(local_time)
+        msg1 = f'НАПОМИНАЮ' # call.message.chat.id.text
+        bot.send_message(call.message.chat.id, msg1)
+    elif call.data == '60_min':
+        bot.send_message(call.message.chat.id, 'Будет сделано через 60 минут =)')
+    elif call.data == '90_min':
+        bot.send_message(call.message.chat.id, 'Будет сделано через 90 минут =)')
     else:
         pass
 
 def remind_text(message):
     user_text = message.text
-    # bot.register_next_step_handler(user_text, callback_worker_rem)
     # bot.send_message(message.chat.id, f'{message.from_user.first_name}, через сколько Вам напомнить:\n{user_text}')
     keyboard_rem = types.InlineKeyboardMarkup()
 
@@ -105,23 +114,25 @@ def remind_text(message):
 # Обработчик нажатий на кнопки 2
 # @bot.callback_query_handler(func=lambda call: True)
 # def callback_worker_rem(call):
-#     local_time = float()
 #     if call.data == '30_min':
-#         local_time = local_time * 30
-#         time.sleep(local_time)
-
-
-
-        # sent = bot.send_message(call.message.chat.id, 'О чем вам напомнить?')
-        # bot.register_next_step_handler(sent, remind_text)
-        # Ждём ответа пользователя и результат помещаем в строковую переменную text
-
-    # elif call.data == '60_min':
-    #     local_time = local_time * 60
-    # elif call.data == '90_min':
-    #     local_time = local_time * 90
-    # else:
-    #     pass
+#         bot.send_message(call.chat.id, 'Будет сделано =)')
+#         # local_time = local_time * 30
+#         # time.sleep(local_time)
+#         # msg1 = user_text
+#         # bot.send_message(call.data.message.chat.id, msg1)
+#
+#
+#
+#         # sent = bot.send_message(call.message.chat.id, 'О чем вам напомнить?')
+#         # bot.register_next_step_handler(sent, remind_text)
+#         # Ждём ответа пользователя и результат помещаем в строковую переменную text
+#
+#     elif call.data == '60_min':
+#         pass # local_time = local_time * 60
+#     elif call.data == '90_min':
+#         pass # local_time = local_time * 90
+#     else:
+#         pass
 
 
 # @bot.message_handler(content_types=['text'])
