@@ -2,11 +2,14 @@ import telebot
 from telebot import apihelper
 from telebot import types
 import time
+import _sqlite3
 
-apihelper.proxy = {'https': 'socks5://user38375:1skmnu@213.32.84.49:13541'}
+# db = _sqlite3.connect('reminder_db.sqlite') # создаем переменную и подключаем базу данных
+
+apihelper.proxy = {'https': 'socks5://user38375:1skmnu@213.32.84.49:13541'} # Подключаем прокси для работы с Telegram
 # apihelper.proxy = {'https':'https://user38375:1skmnu@213.32.84.49:3541'}
 
-bot = telebot.TeleBot('1054775144:AAGR0Pu07k2Ql7VdhleiKL1bl79J6keAEfA')
+bot = telebot.TeleBot('1054775144:AAGR0Pu07k2Ql7VdhleiKL1bl79J6keAEfA') # Подключаем токен нашего бота
 
 """
 Бот-запоминатель-проверятель, который помогает учить иностранные слова (или другие штуки).
@@ -37,6 +40,27 @@ B: Верно. Проверю еще разок позже.
 Расписание проверок настраивается как угодно. Каждый может настроить под свой стиль запоминания.
 """
 
+# cursor = db.cursor()
+# cursor.execute('''
+# CREATE TABLE reminders (
+#     id INTEGER PRIMARY KEY,
+#     user_id INTEGER NOT NULL,
+#     reminde_text TEXT NOT NULL UNIQUE
+# )
+# ''')  # создаем запрос - создаем таблицу
+
+
+# def Write_to_Base(user_id, rem_text):
+#     user_id = str(user_id)
+#     rem_text = str(rem_text)
+#     cursor.execute("INSERT INTO reminders (tele_id, key) VALUES('"+user_id+","+rem_text+"')")
+#     conn.commit()
+
+# bot.message_handler(commands=['user_id_catcher'])
+# def regist_message(message):
+#     user_id = message.from_user.id
+#     print(user_id)
+#     bot.send_message(message.chat.id, f'Держи {user_id}')
 
 # Обрабатывает все текстовые сообщения, содержащие команды '/start' or '/help'.
 @bot.message_handler(commands=['start', 'help'])
