@@ -3,6 +3,7 @@ from telegram import Bot
 from telegram import Update
 from telegram import InlineKeyboardButton # Отвечает за отдельную клавишу
 from telegram import InlineKeyboardMarkup # Отвечает за всю клавиатуру вцелом
+from telegram import ParseMode
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler
@@ -50,6 +51,27 @@ def keyboard_callback_handler(bot: Bot, update: Update, chat_data=None, **kwargs
     query = update.callback_query
     data = query.data
     now = datetime.datetime.now()
+
+    # Обратите внимание: используется 'effective_message'
+    chat_id = update.effective_message.chat_id
+    current_text = update.effective_message.text
+
+    if data == CALLBACK_BUTTON_LEFT:
+        # "Удалим" клавиатуру у прошлого сообщения
+        # (на самом деле отредактируем его так, что текст останется тот же, а клавиатура пропадет)
+        query.edit_message_text(
+            text=current_text,
+            parse_mode=ParseMode.MARKDOWN,
+        )
+        # Отправим новое сообщение при нажатии на кнопку
+        bot.send_message(
+            chat_id=chat_id,
+            text=f'О чем Вам напомнить?',
+        )
+    elif data == CALLBACK_BUTTON_RIGHT:
+        pass
+    else:
+        pass
 
 
 
@@ -122,10 +144,12 @@ def main():
 
     start_handler = CommandHandler('start', do_start)
     message_handler = MessageHandler(Filters.text, do_echo)
+    buttons_handler = CallbackQueryHandler(callback=keyboard_callback_handler, pass_chat_data=True)
 
 
     updater.dispatcher.add_handler(start_handler)
     updater.dispatcher.add_handler(message_handler)
+    updater.dispatcher.add_handler(buttons_handler)
 
     updater.start_polling()
     updater.idle()
