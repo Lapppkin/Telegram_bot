@@ -6,7 +6,7 @@ import _sqlite3
 
 # db = _sqlite3.connect('reminder_db.sqlite') # создаем переменную и подключаем базу данных
 
-apihelper.proxy = {'https': 'socks5://user38375:1skmnu@213.32.84.49:13541'} # Подключаем прокси для работы с Telegram
+# apihelper.proxy = {'https': 'socks5://user38375:1skmnu@213.32.84.49:13541'} # Подключаем прокси для работы с Telegram
 # apihelper.proxy = {'https':'https://user38375:1skmnu@213.32.84.49:3541'}
 
 bot = telebot.TeleBot('1054775144:AAGR0Pu07k2Ql7VdhleiKL1bl79J6keAEfA') # Подключаем токен нашего бота
